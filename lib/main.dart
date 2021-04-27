@@ -42,34 +42,44 @@ class InvestmentsPage extends StatefulWidget {
 
   // note: this variable is used using widget.title
   final String title;
-  final barHeight = 30.0;
+  final barHeight = kToolbarHeight; // 30 is smaller
 
   @override
   _InvestmentsPageState createState() => _InvestmentsPageState();
 }
 
+// inspired from:
 // https://stackoverflow.com/questions/53622598/changing-sliverappbar-title-color-in-flutter-application
 class _InvestmentsPageState extends State<InvestmentsPage> {
   ScrollController _scrollController = new ScrollController();
 
-  bool lastStatus = true;
+  double lastTopBarOpacity = 0;
 
   _scrollListener() {
-    if (isShrink != lastStatus) {
+    if (topBarOpacity != lastTopBarOpacity) {
       setState(() {
-        lastStatus = isShrink;
+        lastTopBarOpacity = topBarOpacity;
       });
     }
   }
 
-  bool get isShrink {
-    return _scrollController.hasClients &&
-    _scrollController.offset > (200 - kToolbarHeight);
+  double get topBarOpacity {
+    // this factor adjusts the speed of the fade effect.
+    // we cannot put a too high factor here or the image can be seen while it is leaving the view
+    int slowingFactor = 8;
+    double barHeight2 = widget.barHeight * slowingFactor;
+    if (!_scrollController.hasClients) {
+      return 0;
+    }
+    if (_scrollController.offset > barHeight2) {
+      return 1;
+    }
+
+    return 1 - (barHeight2 - _scrollController.offset) / barHeight2 ;
   }
 
   @override
   void initState() {
-    _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     super.initState();
   }
@@ -89,6 +99,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
     // change SafeArea to Scaffold if you want to use the cutout area
     return SafeArea(
       child: CustomScrollView(
+        controller: _scrollController,
         slivers: <Widget>[
           SliverAppBar(
             pinned: true,
@@ -105,20 +116,21 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
             flexibleSpace: new Stack(
               alignment: Alignment.topLeft,
               children: <Widget>[
-                Image.asset('assets/images/banner_akt_token1.png', fit: BoxFit.contain),
                 Positioned(
                   top: 0,
                   left: 0,
                   right: 0,
-                  //bottom: 0,
-                  //child: Container(
-                  //  color: Colors.blue,
-                  //),
+                  child: Image.asset('assets/images/banner_akt_token1.png', fit: BoxFit.contain),
+                ),
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
                   child: Opacity(
-                    opacity: 1,
+                    opacity: topBarOpacity,
                     child: Container(
                       height: widget.barHeight,
-                      color: Colors.blue,
+                      color: Colors.black,
                     ),
                   ),
                 ),
@@ -127,10 +139,6 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                   left: 0,
                   right: 0,
                   height: widget.barHeight,
-                  //bottom: 0,
-                  //child: Container(
-                  //  color: Colors.blue,
-                  //),
                   child: Center(child: Text(widget.title, style: Theme.of(context).textTheme.headline1,)),
                 ),
               ],
