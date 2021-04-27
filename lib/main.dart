@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_exercise_with_sliver_thierry/investements_mini_list.dart';
+import 'package:flutter_exercise_with_sliver_thierry/modules/custom_button.dart';
 
 void main() {
   // disable auto-rotation
@@ -20,7 +21,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         // Define the default brightness and colors.
         brightness: Brightness.dark,
-        primaryColor: Colors.lightBlue[800],
+        primaryColor: Color(0xFF0080ff,), // left part is for the alpha, then RGB
+        // const Color(0x0080ff),
         accentColor: Colors.cyan[600],
 
         // Define the default font family.
@@ -30,6 +32,7 @@ class MyApp extends StatelessWidget {
         // text styling for headlines, titles, bodies of text, and more.
         textTheme: TextTheme(
           headline1: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, fontFamily: 'Hind'),
+          headline2: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal, color: Colors.white60),
         ),
       ),
       home: InvestmentsPage(title: 'Investments'),
@@ -95,7 +98,9 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
     final mediaInfo = MediaQuery.of(context);
     // note: this ratio preserving fitting of the image will not look good on tablets with very large screens
     double imageRatio = 260 / 330;
-    final appBarHeight = mediaInfo.size.width * imageRatio;
+    final imageHeight = mediaInfo.size.width * imageRatio;
+    double topBarBottomHeight = 100;
+    double topBarTotalHeight = imageHeight + topBarBottomHeight;
     // change SafeArea to Scaffold if you want to use the cutout area
     return SafeArea(
       child: CustomScrollView(
@@ -107,7 +112,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
             floating: true,
             backgroundColor: Colors.transparent,
             elevation: 0, // removes the shadow
-            expandedHeight: appBarHeight,
+            expandedHeight: topBarTotalHeight,
             //title: Text(widget.title),
             //centerTitle: true,
             // note:
@@ -120,7 +125,41 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                   top: 0,
                   left: 0,
                   right: 0,
-                  child: Image.asset('assets/images/banner_akt_token1.png', fit: BoxFit.contain),
+                  height: topBarTotalHeight,
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(
+                        height: imageHeight,
+                        child: Image.asset('assets/images/banner_a''kt_token1.png', fit: BoxFit.contain),
+                      ),
+                      SizedBox(
+                        height: topBarBottomHeight,
+                        child: Column(
+                        //alignment: Alignment.topLeft,
+                          children: <Widget>[
+                            Text('Purchase our exclusive token now with 25% bonus', style: Theme.of(context).textTheme.headline2),
+                            Text('and get your lifetime Elite membership now', style: Theme.of(context).textTheme.headline2),
+                            Expanded(child: LayoutBuilder(
+                              builder: (BuildContext context, BoxConstraints constraints) {
+                                return Container(
+                                    height: constraints.maxHeight,
+                                    // note: here we could make a new component for teh custom button
+                                    child: Center(
+                                        child: CustomButton(
+                                          text: 'Learn more',
+                                          image: 'assets/images/fontawesome/arrow-right.png',
+                                          onPressed: () {},
+                                      ),
+                                    ),
+                                );
+                              },
+                            ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Positioned(
                   top: 0,
