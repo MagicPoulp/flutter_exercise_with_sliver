@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:flutter_exercise_with_sliver_thierry/investements_mini_list.dart';
 import 'package:flutter_exercise_with_sliver_thierry/modules/custom_button.dart';
+import 'package:flutter_exercise_with_sliver_thierry/parse_json.dart';
 
 void main() {
   // disable auto-rotation
@@ -9,11 +11,19 @@ void main() {
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-  runApp(MyApp());
+  parseJsonFromAssets("assets/data/investments_data.json")
+      .then((investmentsData) {
+    runApp(MyApp(investmentsData: investmentsData));
+  });
 }
 
 class MyApp extends StatelessWidget {
-    @override
+
+  MyApp({required this.investmentsData}) : super();
+
+  var investmentsData;
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter exercise with a sliver',
@@ -32,20 +42,27 @@ class MyApp extends StatelessWidget {
         // text styling for headlines, titles, bodies of text, and more.
         textTheme: TextTheme(
           headline1: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, fontFamily: 'Hind'),
-          headline2: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal, color: Colors.white60),
+          bodyText1: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal, color: Colors.white60),
+
+          headline3: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold, color: Colors.white),
+          headline4: TextStyle(fontSize: 12.0, fontWeight: FontWeight.normal, color: Colors.white70),
+          headline5: TextStyle(fontSize: 12.0, fontWeight: FontWeight.normal, color: Colors.green),
+          headline6: TextStyle(fontSize: 12.0, fontWeight: FontWeight.normal, color: Colors.red),
         ),
       ),
-      home: InvestmentsPage(title: 'Investments'),
+      home: InvestmentsPage(title: 'Investments', investmentsData: investmentsData),
     );
   }
 }
 
 class InvestmentsPage extends StatefulWidget {
-  InvestmentsPage({Key? key, required this.title}) : super(key: key);
+  InvestmentsPage({Key? key, required this.title, required this.investmentsData }) : super(key: key);
 
   // note: this variable is used using widget.title
   final String title;
   final barHeight = kToolbarHeight; // 30 is smaller
+  var investmentsData;
+
 
   @override
   _InvestmentsPageState createState() => _InvestmentsPageState();
@@ -126,39 +143,10 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                   left: 0,
                   right: 0,
                   height: topBarTotalHeight,
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: imageHeight,
-                        child: Image.asset('assets/images/banner_a''kt_token1.png', fit: BoxFit.contain),
-                      ),
-                      SizedBox(
-                        height: topBarBottomHeight,
-                        child: Column(
-                        //alignment: Alignment.topLeft,
-                          children: <Widget>[
-                            Text('Purchase our exclusive token now with 25% bonus', style: Theme.of(context).textTheme.headline2),
-                            Text('and get your lifetime Elite membership now', style: Theme.of(context).textTheme.headline2),
-                            Expanded(child: LayoutBuilder(
-                              builder: (BuildContext context, BoxConstraints constraints) {
-                                return Container(
-                                    height: constraints.maxHeight,
-                                    // note: here we could make a new component for teh custom button
-                                    child: Center(
-                                        child: CustomButton(
-                                          text: 'Learn more',
-                                          image: 'assets/images/fontawesome/arrow-right.png',
-                                          onPressed: () {},
-                                      ),
-                                    ),
-                                );
-                              },
-                            ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
+                  child: renderTopBarContent(
+                      imageHeight: imageHeight,
+                      topBarBottomHeight: topBarBottomHeight,
+                      context: context
                   ),
                 ),
                 Positioned(
@@ -182,39 +170,91 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                 ),
               ],
             ),
-            /*
-            flexibleSpace: FlexibleSpaceBar(
-              child: Image.asset('assets/images/banner_akt_token1.png', fit: BoxFit.contain),
-                // 330 x 260
-              //background: Image.asset('assets/images/banner_akt_token1.png', fit: BoxFit.contain),
-              //title: Text(this.title),
-            ),
-            */
           ),
-/*
+
+          // if we put the banner image here in a SilverList (with childCount=1), it would look nicer in my opinion.
+          // But it is complex (not a clean SliverAppBar) to superpose the appBar with an image here.
+
           SliverList(
             delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                return Image.asset('assets/images/banner_akt_token1.png', fit: BoxFit.contain);
+                    return InvestmentsMiniList(
+                      investmentsDataRow: widget.investmentsData["data"][index],
+                      rowIndex: index, // the index is used for styling
+                    );
+              },
+              childCount: 4,
+            ),
+          ),
+
+          // A padding container at the bottom to give the wanted effect on the right side of
+          // the image in the assignment, with a white area
+          //
+          // note: there is a known bug with this padding thing below
+          // if we use too much our fingers on this white area, the whole app bar because like crazy
+          // with a very strange behaviour, and teh image overlapping.
+          // explanation. it seems that 2 lists are interfering.
+          // If we remove the padding, there is no more bug. But there is a white area in teh assignment.
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                return Container(color: Colors.white, height: mediaInfo.size.height);
               },
               childCount: 1,
             ),
           ),
-*/
 
-          // doc:
-          // "SliverFixedExtentList is more efficient than SliverList because SliverFixedExtentList
-          // does not need to perform layout on its children to obtain their extent in the main axis."
-          SliverFixedExtentList(
-            itemExtent: 50.0,
-            delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                return InvestmentsMiniList();
-              },
-            ),
-          ),
-        ],
+        ]
       ),
     );
   }
 }
+
+var renderTopBarContent = ({imageHeight, topBarBottomHeight, context}) {
+  return  Column(
+    children: <Widget>[
+      SizedBox(
+        height: imageHeight,
+        child: Image.asset('assets/images/banner_akt_token1.png', fit: BoxFit.contain),
+      ),
+      Container(
+      color: Colors.black,
+      child: SizedBox(
+        height: topBarBottomHeight,
+        child: Column(
+          //alignment: Alignment.topLeft,
+          children: <Widget>[
+            Container(height: 5), // just a small padding
+            Text('Purchase our exclusive token now with 25% bonus', style: Theme.of(context).textTheme.bodyText1),
+            Text('and get your lifetime Elite membership now', style: Theme.of(context).textTheme.bodyText1),
+            Expanded(child: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                return Container(
+                  height: constraints.maxHeight,
+                  // note: here we could make a new component for teh custom button
+                  //child: Center(
+                  child: Container(
+                    alignment: Alignment.center,
+                    // we translate we correct an optical effect. the bottom of the text seems further away
+                    // due to letters that go down (y, j, etc)
+                    transform: Transform.translate(offset: Offset(0.0,-2.0)).transform,
+                    child: CustomButton(
+                      text: 'Learn more',
+                      image: 'assets/images/fontawesome/arrow-right.png',
+                      onPressed: () {
+                        // open a dialog or change of page
+                      },
+                    ),
+                  ),
+                  //   ),
+                );
+              },
+            ),
+            )
+          ],
+        ),
+      ),
+      ),
+    ],
+  );
+};

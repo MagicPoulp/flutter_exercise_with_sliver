@@ -16,7 +16,6 @@ class CustomButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.0),
         ),
         backgroundColor: Theme.of(context).primaryColor,
-        //side: BorderSide(width: 2, color: Colors.green),
       ),
       onPressed: () {
         onPressed();

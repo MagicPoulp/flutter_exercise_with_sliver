@@ -1,0 +1,234 @@
+{
+   "data":[
+      {
+         "title": "Cryptos",
+         "data":[
+            {
+               "name": "BTC",
+               "amount": 12,
+               "variation": 2,
+               "color": "0xFF78c9ad"
+            },
+            {
+               "name": "ASC",
+               "amount": 12,
+               "variation": 2,
+               "color": "0xFFd09494"
+            },
+            {
+               "name": "AGS",
+               "amount": 12,
+               "variation": -2.1,
+               "color": "0xFFd09494"
+            },
+            {
+               "name": "UYG",
+               "amount": 43,
+               "variation": 20,
+               "color": "0xFFa38ab8"
+            },
+            {
+               "name": "BTC",
+               "amount": 12,
+               "variation": -3,
+               "color": "0xFFa38ab8"
+            },
+            {
+               "name": "BTC",
+               "amount": 12,
+               "variation": 2,
+               "color": "0xFF78c9ad"
+            },
+            {
+               "name": "ASC",
+               "amount": 12,
+               "variation": 2,
+               "color": "0xFFd09494"
+            },
+            {
+               "name": "AGS",
+               "amount": 12,
+               "variation": -2.1,
+               "color": "0xFFd09494"
+            },
+            {
+               "name": "UYG",
+               "amount": 43,
+               "variation": 20,
+               "color": "0xFFa38ab8"
+            },
+            {
+               "name": "BTC",
+               "amount": 12,
+               "variation": -3,
+               "color": "0xFFa38ab8"
+            }
+         ]
+      },
+      {
+         "title": "Tokens",
+         "data":[
+            {
+               "name": "BTC",
+               "amount": 12,
+               "variation": 2,
+               "color": "0xFFebb14b"
+            },
+            {
+               "name": "ASC",
+               "amount": 12,
+               "variation": 2,
+               "color": "0xFF5e3023"
+            },
+            {
+               "name": "GDA",
+               "amount": 12,
+               "variation": -2.1,
+               "color": "0xFFffd800"
+            },
+            {
+               "name": "CSA",
+               "amount": 43,
+               "variation": 20,
+               "color": "0xFFdffd800"
+            },
+            {
+               "name": "BTC",
+               "amount": 12,
+               "variation": -3,
+               "color": "0xFFcebd8a"
+            },
+            {
+               "name": "BTC",
+               "amount": 12,
+               "variation": 2,
+               "color": "0xFF78c9ad"
+            },
+            {
+               "name": "ASC",
+               "amount": 12,
+               "variation": 2,
+               "color": "0xFFd09494"
+            },
+            {
+               "name": "AGS",
+               "amount": 12,
+               "variation": -2.1,
+               "color": "0xFFd09494"
+            },
+            {
+               "name": "UYG",
+               "amount": 43,
+               "variation": 20,
+               "color": "0xFFa38ab8"
+            },
+            {
+               "name": "BTC",
+               "amount": 12,
+               "variation": -3,
+               "color": "0xFFa38ab8"
+            }
+         ]
+      },
+      {
+         "title": "Cryptos",
+         "data":[
+            {
+               "name": "BTC",
+               "amount": 12,
+               "variation": 2,
+               "color": "0xFF78c9ad"
+            },
+            {
+               "name": "ASC",
+               "amount": 12,
+               "variation": 2,
+               "color": "0xFFd09494"
+            },
+            {
+               "name": "AGS",
+               "amount": 12,
+               "variation": -2.1,
+               "color": "0xFFd09494"
+            },
+            {
+               "name": "UYG",
+               "amount": 43,
+               "variation": 20,
+               "color": "0xFFa38ab8"
+            },
+            {
+               "name": "BTC",
+               "amount": 12,
+               "variation": -3,
+               "color": "0xFFa38ab8"
+            },
+            {
+               "name": "BTC",
+               "amount": 12,
+               "variation": 2,
+               "color": "0xFF78c9ad"
+            },
+            {
+               "name": "ASC",
+               "amount": 12,
+               "variation": 2,
+               "color": "0xFFd09494"
+            },
+            {
+               "name": "AGS",
+               "amount": 12,
+               "variation": -2.1,
+               "color": "0xFFd09494"
+            },
+            {
+               "name": "UYG",
+               "amount": 43,
+               "variation": 20,
+               "color": "0xFFa38ab8"
+            },
+            {
+               "name": "BTC",
+               "amount": 12,
+               "variation": -3,
+               "color": "0xFFa38ab8"
+            }
+         ]
+      },
+      {
+         "title": "Tokens",
+         "data":[
+            {
+               "name": "BTC",
+               "amount": 12,
+               "variation": 2,
+               "color": "0xFF78c9ad"
+            },
+            {
+               "name": "ASC",
+               "amount": 12,
+               "variation": 2,
+               "color": "0xFFd09494"
+            },
+            {
+               "name": "AGS",
+               "amount": 12,
+               "variation": -2.1,
+               "color": "0xFFd09494"
+            },
+            {
+               "name": "UYG",
+               "amount": 43,
+               "variation": 20,
+               "color": "0xFFa38ab8"
+            },
+            {
+               "name": "ZXS",
+               "amount": 12,
+               "variation": -3,
+               "color": "0xFFa38ab8"
+            }
+         ]
+      }
+   ]
+}

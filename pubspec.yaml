@@ -49,6 +49,7 @@ flutter:
     - assets/images/banner_akt_token1.png
     # .svg images are not supported by flutter
     - assets/images/fontawesome/arrow-right.png
+    - assets/data/investments_data.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
