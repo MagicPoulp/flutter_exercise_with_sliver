@@ -7,7 +7,7 @@ class InvestmentsMiniList extends StatelessWidget {
 
   final investmentsDataRow;
   final rowIndex;
-  final rowHeight = 160.0;
+  final rowHeight = 150.0;
 
   @override
   Widget build(BuildContext context) {

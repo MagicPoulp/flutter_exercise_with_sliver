@@ -37,10 +37,15 @@ class InvestmentBadge extends StatelessWidget {
         children: <Widget>[
           Container(
             margin: const EdgeInsets.only(bottom: 5.0),
-            child: SizedBox(
+            // source for the rounded rectangle (our CustomButton uses another technique)
+            // https://flutter-examples.com/flutter-create-rounded-corner-rectangle/
+            child: Container(
               width: 50,
               height: 50,
-              child: Container(color: Color(int.parse(color),),),
+                decoration: BoxDecoration(
+                    color: Color(int.parse(color),),
+                    borderRadius: BorderRadius.all(Radius.circular(4.0))
+                ),
             ),
           ),
           Text(name, style: Theme.of(context).textTheme.headline3),
@@ -56,6 +61,8 @@ class InvestmentBadge extends StatelessWidget {
                 child:
                   Transform.rotate(
                     angle: variation >= 0 ? 45 * math.pi / 180 : - 45 * math.pi / 180,
+                    // the unicode is not exactly like  the arrows in the image but it is good enough
+                    // we could use images to really do what we want
                     child: Text(variation >= 0 ? "\u2303 " : "\u2304 ", style: variationStyle),
                   ),
               ),

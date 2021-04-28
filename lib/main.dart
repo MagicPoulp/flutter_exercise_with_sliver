@@ -126,7 +126,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
           SliverAppBar(
             pinned: true,
             snap: false,
-            floating: true,
+            floating: false,
             backgroundColor: Colors.transparent,
             elevation: 0, // removes the shadow
             expandedHeight: topBarTotalHeight,
@@ -178,6 +178,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
           SliverList(
             delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
+
                     return InvestmentsMiniList(
                       investmentsDataRow: widget.investmentsData["data"][index],
                       rowIndex: index, // the index is used for styling
@@ -187,14 +188,6 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
             ),
           ),
 
-          // A padding container at the bottom to give the wanted effect on the right side of
-          // the image in the assignment, with a white area
-          //
-          // note: there is a known bug with this padding thing below
-          // if we use too much our fingers on this white area, the whole app bar because like crazy
-          // with a very strange behaviour, and teh image overlapping.
-          // explanation. it seems that 2 lists are interfering.
-          // If we remove the padding, there is no more bug. But there is a white area in teh assignment.
           SliverList(
             delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
@@ -218,11 +211,11 @@ var renderTopBarContent = ({imageHeight, topBarBottomHeight, context}) {
         child: Image.asset('assets/images/banner_akt_token1.png', fit: BoxFit.contain),
       ),
       Container(
-      color: Colors.black,
+      // uncomment this blue color and the other green color to check the alignment of the CustomButton below
+      //color: Colors.blue,
       child: SizedBox(
         height: topBarBottomHeight,
         child: Column(
-          //alignment: Alignment.topLeft,
           children: <Widget>[
             Container(height: 5), // just a small padding
             Text('Purchase our exclusive token now with 25% bonus', style: Theme.of(context).textTheme.bodyText1),
@@ -231,20 +224,18 @@ var renderTopBarContent = ({imageHeight, topBarBottomHeight, context}) {
               builder: (BuildContext context, BoxConstraints constraints) {
                 return Container(
                   height: constraints.maxHeight,
-                  // note: here we could make a new component for teh custom button
-                  //child: Center(
-                  child: Container(
-                    alignment: Alignment.center,
-                    // we translate we correct an optical effect. the bottom of the text seems further away
-                    // due to letters that go down (y, j, etc)
-                    transform: Transform.translate(offset: Offset(0.0,-2.0)).transform,
-                    child: CustomButton(
-                      text: 'Learn more',
-                      image: 'assets/images/fontawesome/arrow-right.png',
-                      onPressed: () {
-                        // open a dialog or change of page
-                      },
-                    ),
+                  alignment: Alignment.center,
+                  // uncomment this color to check the alignment of the CustomButton below
+                  // color: Colors.green,
+                  // we translate to correct an optical effect. the bottom of the text seems further away
+                  // due to letters that go down (y, j, etc)
+                  //transform: Transform.translate(offset: Offset(0.0,-2.0)).transform,
+                  child: CustomButton(
+                    text: 'Learn more',
+                    image: 'assets/images/fontawesome/arrow-right.png',
+                    onPressed: () {
+                      // open a dialog or change of page
+                    },
                   ),
                   //   ),
                 );
