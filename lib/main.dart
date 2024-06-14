@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
 
   MyApp({required this.investmentsData}) : super();
 
-  var investmentsData;
+  final investmentsData;
 
   @override
   Widget build(BuildContext context) {
@@ -61,8 +61,7 @@ class InvestmentsPage extends StatefulWidget {
   // note: this variable is used using widget.title
   final String title;
   final barHeight = kToolbarHeight; // 30 is smaller
-  var investmentsData;
-
+  final investmentsData;
 
   @override
   _InvestmentsPageState createState() => _InvestmentsPageState();
