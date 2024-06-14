@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         primaryColor: Color(0xFF0080ff,), // left part is for the alpha, then RGB
         // const Color(0x0080ff),
-        focusColor: Colors.cyan[600],
+        //focusColor: Colors.cyan[600],
 
         // Define the default font family.
         fontFamily: 'Georgia',
